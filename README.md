@@ -8,8 +8,7 @@ Example: `java -jar callsite.jar /path/to/my.jar java/io/PrintStream println`
 
 ## Building
 
-who knows, eclipse magic.  
-if you know how to build this with maven or something, feel free to PR.  
+`gradle jar`
 
 
 ## Dependencies
