@@ -1,0 +1,44 @@
+plugins {
+    id 'java-library'
+}
+
+sourceSets {
+    main {
+		java {
+			srcDirs = ['src']
+		}
+	}
+}
+
+repositories {
+	mavenCentral()
+}
+
+dependencies {
+	compile group: 'asm', name: 'asm', version: '2.2.3'
+	compile group: 'asm', name: 'asm-commons', version: '2.2.3'
+
+}
+
+
+java {
+    sourceCompatibility = JavaVersion.VERSION_1_8
+    targetCompatibility = JavaVersion.VERSION_1_8
+}
+
+
+jar {
+  manifest {
+    attributes(
+      'Class-Path': configurations.compile.collect { it.getName() }.join(' '),
+      'Main-Class': 'net.coderobe.java.callsite.Main'
+    )
+  }
+  from {
+    configurations.compile.collect { it.isDirectory() ? it : zipTree(it) }
+  }
+}
+
+
+
+version = '1'
