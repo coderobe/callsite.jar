@@ -33,12 +33,13 @@ public class Main {
 		}
 	}
 
-	private class AppMethodVisitor extends MethodAdapter {
+
+	private class AppMethodVisitor extends MethodVisitor {
 		boolean callsTarget;
 		int line;
 
 		public AppMethodVisitor() {
-			super(new EmptyVisitor());
+			super(Opcodes.ASM4);
 		}
 
 		public void visitMethodInsn(int opcode, String owner, String name, String desc) {
@@ -62,7 +63,7 @@ public class Main {
 		}
 	}
 
-	private class AppClassVisitor extends ClassAdapter {
+	private class AppClassVisitor extends ClassVisitor {
 
 		private AppMethodVisitor mv = new AppMethodVisitor();
 
@@ -72,7 +73,7 @@ public class Main {
 		public String methodDesc;
 
 		public AppClassVisitor() {
-			super(new EmptyVisitor());
+			super(Opcodes.ASM6);
 		}
 
 		public void visit(int version, int access, String name, String signature, String superName,
@@ -105,14 +106,11 @@ public class Main {
 
 		while (entries.hasMoreElements()) {
 			JarEntry entry = entries.nextElement();
-
 			if (entry.getName().endsWith(".class")) {
 				InputStream stream = new BufferedInputStream(jarFile.getInputStream(entry), 1024);
-				
 				try {
 					ClassReader reader = new ClassReader(stream);
-
-					reader.accept((ClassVisitor) cv, false);
+					reader.accept((ClassVisitor) cv, 0);
 				} catch(ArrayIndexOutOfBoundsException e) {
 					System.err.println("class file too large");
 					System.exit(255);
@@ -136,7 +134,6 @@ public class Main {
 			}
 			
 			app.findCallingMethodsInJar(args[0], args[1], "void "+args[2]+"()");
-
 			for (Callee c : app.callees) {
 				System.out
 						.println(c.source + ":" + c.line + " " + c.className + " " + c.methodName + " " + c.methodDesc);
