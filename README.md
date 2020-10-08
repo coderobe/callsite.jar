@@ -12,12 +12,6 @@ who knows, eclipse magic.
 if you know how to build this with maven or something, feel free to PR.  
 
 
-## Dependencies
-
-asm 2.2.3  
-asm-commons 2.2.3  
-
-
 ## License
 
 This work, initially authored by Robin Broda (coderobe), is licensed under the AGPLv3.

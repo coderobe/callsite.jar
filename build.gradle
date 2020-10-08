@@ -15,9 +15,8 @@ repositories {
 }
 
 dependencies {
-	compile group: 'asm', name: 'asm', version: '2.2.3'
-	compile group: 'asm', name: 'asm-commons', version: '2.2.3'
-
+	compile group: 'org.ow2.asm', name: 'asm', version: '9.0'
+	compile group: 'org.ow2.asm', name: 'asm-commons', version: '9.0'
 }
 
 
